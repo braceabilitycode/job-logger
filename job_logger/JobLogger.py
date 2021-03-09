@@ -19,25 +19,46 @@ class Job_Logger:
         self.url = config['job_logger']['url']
         self.guid = str(uuid.uuid4())
 
-    def StartJob(self,the_job_name):
+    def Start(self,the_job_name):
         self.job_name=the_job_name
         data={
                 "TraceId":self.guid,
                 "Type":"Started",
                 "JobName":self.job_name,
-                "StartedAt":str(datetime.datetime.now())
+                "CreatedAt":str(datetime.datetime.now())
             }
 
         requests.post(self.url, data=json.dumps(data), headers=self.headers)
 
-    def StopJob(self):
+    def Stop(self):
         data={
                 "TraceId":self.guid,
                 "Type":"Completed",
                 "JobName":self.job_name,
-                "CompletedAt":str(datetime.datetime.now())
+                "CreatedAt":str(datetime.datetime.now())
+            }
+    
+        requests.post(self.url, data=json.dumps(data), headers=self.headers)
+
+    def Exception(self,exception):
+        data={
+                "TraceId":self.guid,
+                "Type":"Exception",
+                "JobName":self.job_name,
+                "CreatedAt":str(datetime.datetime.now()),
+                "Error":str(exception)
             }
     
         requests.post(self.url, data=json.dumps(data), headers=self.headers)
     
+    def Warning(self,Warning):
+        data={
+                "TraceId":self.guid,
+                "Type":"Warning",
+                "JobName":self.job_name,
+                "CreatedAt":str(datetime.datetime.now()),
+                "Warning":str(Warning)
+            }
+    
+        requests.post(self.url, data=json.dumps(data), headers=self.headers)
 
