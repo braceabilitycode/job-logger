@@ -17,10 +17,10 @@ class Job_Logger:
         config.read(config_file)
 
         self.url = config['job_logger']['url']
-        self.guid = str(uuid.uuid4())
 
     def Start(self,the_job_name):
         self.job_name=the_job_name
+        self.guid = str(uuid.uuid4())
         data={
                 "TraceId":self.guid,
                 "Type":"Started",
