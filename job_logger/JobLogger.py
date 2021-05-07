@@ -3,6 +3,7 @@ import json
 import datetime
 from configparser import ConfigParser
 import uuid
+import os
 
 class Job_Logger:
 
@@ -12,6 +13,7 @@ class Job_Logger:
     headers = { 'Accept' : 'application/json', 'Content-Type' : 'application/json'}
 
     def __init__(self):
+        print(f'Working directory is: {os.getcwd()}')
         config = ConfigParser()
         config_file ='./config.ini'
         config.read(config_file)
